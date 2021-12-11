@@ -13,7 +13,7 @@ export default function Home() {
     if (movies) {
       return movies.map((movie: Movie) => (
         <Grid item xs={4} key={movie.id}>
-          <Link href={`/${movie.id}`}>
+          <Link href={`/seats/${movie.id}`}>
             <div className={styles.card}>
               <div className={styles.movieTitle}> {movie.name} </div>
               <div className={styles.movieLanguage}> {movie.language} </div>

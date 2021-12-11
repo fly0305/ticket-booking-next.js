@@ -1,0 +1,22 @@
+.seatsContainer {
+  text-align: center;
+}
+.seatsHolder {
+  margin: 10px;
+}
+.seats {
+  cursor: pointer;
+  color: #777;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 11px;
+  border: 1px solid greenyellow;
+}
+.colName {
+  color: #777;
+  font-weight: 700;
+  margin-right: 20px;
+}
+.seatSelected0 {
+  color: red !important;
+}

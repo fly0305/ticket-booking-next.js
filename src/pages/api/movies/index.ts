@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { Movie } from '../../constants/models/Movies'
-import { movies } from '../../constants/movies'
+import { Movie } from '../../../constants/models/Movies'
+import { movies } from '../../../constants/movies'
 
 
 export default function handler(req: NextApiRequest,res: NextApiResponse<Movie[]>) {

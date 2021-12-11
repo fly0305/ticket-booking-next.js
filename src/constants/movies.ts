@@ -1,8 +1,18 @@
-export const movies = [
+import { Movie } from "./models/Movies";
+
+export const movies: Movie[] = [
   {
     id: 1,
     name: 'Avengers: Endgame',
     language: 'English',
+    ticketCost: 200,
+    rows: 3,
+    cols: 3,
+    seats: {
+      a: [0,0,0],
+      b: [0,0,0],
+      c: [0,0,0],
+    }
   },
   {
     id: 2,
