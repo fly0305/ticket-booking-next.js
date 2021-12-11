@@ -4,8 +4,7 @@ const Tickets = () => {
   return (
     <>
       <Head>
-        <title>Ninja List | Tickets</title>
-        <meta name="keywords" content="ninjas"/>
+        <title>Tickets</title>
       </Head>
       <div>
         <h1>Tickets</h1>
