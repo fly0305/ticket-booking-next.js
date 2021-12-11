@@ -9,7 +9,7 @@ export const movies: Movie[] = [
     rows: 3,
     cols: 3,
     seats: {
-      a: [0,0,0],
+      a: [0,1,2],
       b: [0,0,0],
       c: [0,0,0],
     }

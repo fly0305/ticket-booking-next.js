@@ -20,7 +20,13 @@ const Seats = () => {
 
   const onSeatClick = (seatValue: number, rowIndex: number, key: string) => {
     if (seatDetails) {
-      seatDetails[key][rowIndex] = 1;
+      if (seatValue === 1) {
+        return;
+      } else if (seatValue === 0) {
+        seatDetails[key][rowIndex] = 2; 
+      } else {
+        seatDetails[key][rowIndex] = 0; 
+      }
     }
     console.log(seatDetails);
     setSeatDetails({...seatDetails});
@@ -31,6 +37,17 @@ const Seats = () => {
    * 1 - Booked
    * 2 - Selected
    */
+  const getClassNameForSeats = (seatValue: number) => {
+    let dynamicClass;
+    if (seatValue === 0) {  // Not booked
+      dynamicClass = styles.seatNotBooked;
+    }else if (seatValue === 1) {  // booked
+      dynamicClass = styles.seatBooked;
+    } else {  // Seat Selected
+      dynamicClass = styles.seatSelected;
+    }
+    return `${styles.seats} ${dynamicClass}`
+  }
 
   const RenderSeats = () => {
     let seatArray = [];
@@ -38,7 +55,7 @@ const Seats = () => {
       let colValue = seatDetails[key].map((seatValue, rowIndex) => (
         <span key={`${key}.${rowIndex}`} className={styles.seatsHolder}>
           {rowIndex === 0 && <span className={styles.colName}>{key}</span>}
-          <span className={`${styles.seats} ${styles.seatSelected}${seatValue}`} onClick={() => onSeatClick(seatValue, rowIndex, key)}>
+          <span className={getClassNameForSeats(seatValue)} onClick={() => onSeatClick(seatValue, rowIndex, key)}>
             {rowIndex+1} {seatValue}
           </span>
           {seatDetails && rowIndex === seatDetails[key].length-1 && <><br/><br/></>}
