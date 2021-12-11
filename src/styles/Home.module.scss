@@ -1,7 +1,6 @@
 .title {
   color: #333;
-  padding-bottom: 20px;
-  text-align: center;
+  padding: 20px 0 0px 0;
 }
 .text {
   color: #777;
@@ -15,4 +14,31 @@
   border-radius: 4px;
   color: white;
   text-align: center;
+}
+.movieTitle {
+  color: #4b4b4b;
+  font-weight: 700;
+  font-size: 19px;
+}
+.card {
+  cursor: pointer;
+  border: 2px solid #cac1c1;
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 11%), 0 6px 20px 0 rgb(0 0 0 / 14%);
+}
+.movieLanguage {
+  color: #777;
+  font-weight: 700;
+}
+.moviesContainer {
+  margin: 0 auto;
+  text-align: center;
+  width: 90%;
+}
+.addMovieButton {
+  margin-bottom: 30px;
+  background: #4979ff;
 }
