@@ -66,7 +66,7 @@ const Seats = () => {
       seatArray.push(colValue);
     }
     return (
-      <>{seatArray}</>
+      <div className={styles.seatsLeafContainer}>{seatArray}</div>
     ) 
   }
 

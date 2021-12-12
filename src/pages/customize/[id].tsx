@@ -19,7 +19,9 @@ const CustomizeRows = () => {
   const [column, setColumn] = useState<number>(0);
 
   useEffect(() => { 
-    if (movie && movie.seats) {
+    if (movie?.seats) {
+      setRow(movie?.rows || 0)
+      setColumn(movie?.cols || 0)
       setSeatDetails(movie.seats); 
     }
   }, [movie])
