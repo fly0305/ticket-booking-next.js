@@ -1,0 +1,35 @@
+.container {
+  justify-content: center;
+  text-align: center;
+  color: #545454;
+  margin-top: 7%;
+}
+.card {
+  background: #fff;
+  padding: 20px;
+  width: 400px;
+  text-align: center;
+  margin: auto;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 11%), 0 6px 20px 0 rgb(0 0 0 / 14%);
+}
+.cardTitle {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+.seatDetailsContainer {
+  display: flex;
+  margin-top: 20px;
+}
+.seatDetails {
+  flex: 1;
+  text-align: start;
+}
+.hrStyle {
+  margin: 20px 0;
+}
+.paymentButton {
+  background: #f84464 !important;
+  margin-top: 30px !important;
+  margin-bottom: 15px !important;
+}

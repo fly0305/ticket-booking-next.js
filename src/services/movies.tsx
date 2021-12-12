@@ -1,5 +1,6 @@
 import axios from 'axios'
 import useSWR from 'swr'
+import { Seats } from '../constants/models/Movies'
 
 function useGetMovies () {
   const fetcher = (url: string) => axios.get(url).then(res => res.data)
@@ -23,7 +24,12 @@ function useGetMovieById (id: string) {
   }
 }
 
+async function useBookTicketByMovieId (id: string, seatDetails: Seats) {
+  return await axios.put(`/api/movies/${id}`, {seatDetails})
+}
+
 export {
   useGetMovies,
   useGetMovieById,
+  useBookTicketByMovieId
 }

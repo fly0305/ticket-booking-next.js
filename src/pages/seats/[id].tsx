@@ -1,12 +1,12 @@
 import Head from 'next/head'
+import Link from 'next/link';
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
+import { Button } from '@mui/material';
 
 import { Movie, Seats } from '../../constants/models/Movies'
 import { useGetMovieById } from '../../services/movies'
 import styles from './Seats.module.scss'
-import { Button } from '@mui/material';
-import Link from 'next/link';
 
 const Seats = () => {  
   const router = useRouter()
@@ -68,14 +68,6 @@ const Seats = () => {
     return (
       <>{seatArray}</>
     ) 
-  }
-
-  const onPaymentButtonClick = () => {
-    router.push({
-      pathname: '/about',
-      query: { selectedSeats: JSON.stringify(selectedSeats) }
-      //selectedSeats: selectedSeats, movie: movie, seatDetails: seatDetails
-    })
   }
 
   const RenderPaymentButton = () => {
