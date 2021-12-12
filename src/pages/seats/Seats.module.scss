@@ -6,13 +6,15 @@
 }
 .seats {
   cursor: pointer;
-  color: #777;
+  color: #545454;
   font-size: 12px;
   font-weight: 700;
   padding: 7px 11px;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 11%), 0 2px 4px 0 rgb(0 0 0 / 14%);
 }
 .colName {
-  color: #777;
+  color: #545454;
   font-weight: 700;
   margin-right: 20px;
 }
@@ -20,14 +22,20 @@
   color: red !important;
 }
 .seatNotBooked {
-  border: 1px solid rgb(35 154 0);
+  // border: 1px solid rgb(53 212 6);
 }
 .seatBooked {
-  border: 1px solid rgba(138, 138, 138, 0.418);
   background: rgba(138, 138, 138, 0.418);
   cursor: default;
 }
 .seatSelected {
-  border: 1px solid rgb(35 154 0);
+  color: #fff !important;
   background: rgb(53 212 6);
+}
+.paymentButton {
+  background: #f84464 !important;
+}
+.paymentButtonContainer {
+  position: sticky;
+  bottom: 10px;
 }

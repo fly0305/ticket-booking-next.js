@@ -5,9 +5,12 @@ import { useState, useEffect } from 'react'
 import { Movie, Seats } from '../../constants/models/Movies'
 import { useGetMovieById } from '../../services/movies'
 import styles from './Seats.module.scss'
+import { Button } from '@mui/material';
+import Link from 'next/link';
 
 const Seats = () => {  
   const router = useRouter()
+  let selectedSeats: string[] = [];
   const { id }: any = router.query
   const { movie, isLoading, isError }: MovieType = useGetMovieById(id);
   const [seatDetails, setSeatDetails] = useState<Seats>({});
@@ -28,7 +31,6 @@ const Seats = () => {
         seatDetails[key][rowIndex] = 0; 
       }
     }
-    console.log(seatDetails);
     setSeatDetails({...seatDetails});
   }
 
@@ -56,7 +58,7 @@ const Seats = () => {
         <span key={`${key}.${rowIndex}`} className={styles.seatsHolder}>
           {rowIndex === 0 && <span className={styles.colName}>{key}</span>}
           <span className={getClassNameForSeats(seatValue)} onClick={() => onSeatClick(seatValue, rowIndex, key)}>
-            {rowIndex+1} {seatValue}
+            {rowIndex+1}
           </span>
           {seatDetails && rowIndex === seatDetails[key].length-1 && <><br/><br/></>}
         </span>
@@ -68,6 +70,38 @@ const Seats = () => {
     ) 
   }
 
+  const onPaymentButtonClick = () => {
+    router.push({
+      pathname: '/about',
+      query: { selectedSeats: JSON.stringify(selectedSeats) }
+      //selectedSeats: selectedSeats, movie: movie, seatDetails: seatDetails
+    })
+  }
+
+  const RenderPaymentButton = () => {
+    selectedSeats = [];
+    for(let key in seatDetails) {
+      seatDetails[key].forEach((seatValue, seatIndex) => {
+        if (seatValue === 2) {
+          selectedSeats.push(`${key}${seatIndex+1}`)
+        }
+      })
+    }
+    if (selectedSeats.length) {
+      return (
+        <Link href={{ pathname: '/payment', query: { movieId: movie.id, seatDetails: JSON.stringify(seatDetails) } }}>
+          <div className={styles.paymentButtonContainer}>
+            <Button variant="contained" href="#contained-buttons" className={styles.paymentButton} >
+              Pay Rs.{selectedSeats.length*(movie.ticketCost || 0)}
+            </Button>
+          </div>
+        </Link>
+      )
+    } else {
+      return <></>
+    }
+  }
+    
   if (isError) return <div>failed to load</div>
   if (!movie) return <div>loading...</div>
   return (
@@ -78,6 +112,7 @@ const Seats = () => {
       <div className={styles.seatsContainer}>
         <h1>{movie.name}</h1>
         {seatDetails && <RenderSeats />}
+        <RenderPaymentButton />
       </div>
     </>
   );
