@@ -13,7 +13,7 @@ export default function Home() {
     if (movies) {
       return movies.map((movie: Movie) => (
         <Grid item xs={4} key={movie.id}>
-          <Link href={`/seats/${movie.id}`}>
+          <Link href={`/details/${movie.id}`}>
             <div className={styles.card}>
               <div className={styles.movieTitle}> {movie.name} </div>
               <div className={styles.movieLanguage}> {movie.language} </div>
@@ -27,12 +27,6 @@ export default function Home() {
       return <>No Movies To Watch...</>
     }
   }
-
-  const RenderAddButton = () => (
-    <Button variant="contained" href="#contained-buttons" className={styles.addMovieButton} >
-      Add New Movie
-    </Button>
-  )
   
   return (
     <>
@@ -41,7 +35,6 @@ export default function Home() {
       </Head>
       <div className={styles.moviesContainer}>
         <h1 className={styles.title}>Recommended Movies</h1>
-        <RenderAddButton />
         <Grid container spacing={2}>
           <RenderMoviesList/>
         </Grid>

@@ -1,0 +1,70 @@
+.seatsContainer {
+  text-align: center;
+}
+.seatsHolder {
+  margin: 10px;
+}
+.seatsLeafContainer {
+  margin-left: -30px;
+}
+.seats {
+  cursor: pointer;
+  color: #545454;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 11px;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 11%), 0 2px 4px 0 rgb(0 0 0 / 14%);
+}
+.colName {
+  color: #545454;
+  font-weight: 700;
+  margin-right: 20px;
+}
+.seatSelected0 {
+  color: red !important;
+}
+.seatBooked {
+  background: rgba(138, 138, 138, 0.418);
+  cursor: default;
+}
+.seatSelected {
+  color: #fff !important;
+  background: rgb(53 212 6);
+}
+.seatBlocked {
+  color: #fff !important;
+  background: tomato;
+}
+.paymentButton {
+  background: #f84464 !important;
+}
+.paymentButtonContainer {
+  position: sticky;
+  bottom: 10px;
+}
+.inputContainer {
+  margin-bottom: 20px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.inputHolder {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+.inputField {
+  width: 100px;
+  margin: 10px !important;
+}
+.setGridButton {
+  height: 40px !important;
+  margin-top: 10px !important;
+  background: #f84464 !important;
+  margin-left: 10px !important;
+}
+.saveSetUpButton {
+  margin-top: -5px !important;
+  background: #4f44f8 !important;
+}

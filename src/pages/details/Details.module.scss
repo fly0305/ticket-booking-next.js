@@ -1,0 +1,55 @@
+.seatsContainer {
+  text-align: center;
+  margin-top: 80px;
+}
+.seatsHolder {
+  margin: 10px;
+}
+.seats {
+  cursor: pointer;
+  color: rgb(51 51 51);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 11px;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 11%), 0 2px 4px 0 rgb(0 0 0 / 14%);
+}
+.colName {
+  color: rgb(51 51 51);
+  font-weight: 700;
+  margin-right: 20px;
+}
+.seatSelected0 {
+  color: red !important;
+}
+.seatBooked {
+  background: rgba(138, 138, 138, 0.418);
+  cursor: default;
+}
+.seatSelected {
+  color: #fff !important;
+  background: rgb(53 212 6);
+}
+.paymentButton {
+  background: #f84464 !important;
+}
+.paymentButtonContainer {
+  position: sticky;
+  bottom: 10px;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: space-around;
+}
+.buttonHolder {
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+.language {
+  color: rgb(51 51 51);
+  font-weight: 700;
+  margin-top: -20px;
+  font-size: 22px;
+}
