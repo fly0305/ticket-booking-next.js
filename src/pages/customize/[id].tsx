@@ -25,6 +25,10 @@ const CustomizeRows = () => {
       setSeatDetails(movie.seats); 
     }
   }, [movie])
+  
+  useEffect(() => { 
+    handleSubmit();
+  }, [row, column])
 
   const handleSubmit = () => {
     let newSeatObject: Seats = {};
@@ -54,7 +58,7 @@ const CustomizeRows = () => {
   }
 
   const handleSaveSetup = async () => {
-    const res = await useBookTicketByMovieId(id, modifiedSeatValue());
+    const res = await useBookTicketByMovieId(id, seatDetails);
     if (res.status === 200) {
       console.log(res);
       router.push(`/details/${id}`);
@@ -71,8 +75,8 @@ const CustomizeRows = () => {
             name="row" value={row} onChange={(e) => setRow(parseInt(e.target.value))} />
           <TextField id="outlined-basic" type='number' label="Column" variant="outlined" size="small" className={styles.inputField}
             value={column} onChange={(e) => setColumn(parseInt(e.target.value))} />
-          <Button onClick={handleSubmit} variant="contained" className={styles.setGridButton}>
-            Set Grid
+          <Button onClick={handleSaveSetup} variant="contained" className={styles.saveSetUpButton}>
+            Save Setup
           </Button>
         </form>
       </div>
@@ -130,30 +134,6 @@ const CustomizeRows = () => {
       <div className={styles.seatsLeafContainer}>{seatArray}</div>
     ) 
   }
-
-  const RenderPaymentButton = () => {
-    selectedSeats = [];
-    for(let key in seatDetails) {
-      seatDetails[key].forEach((seatValue, seatIndex) => {
-        if (seatValue === 2) {
-          selectedSeats.push(`${key}${seatIndex+1}`)
-        }
-      })
-    }
-    if (selectedSeats.length) {
-      return (
-        <Link href={{ pathname: '/payment', query: { movieId: movie.id, seatDetails: JSON.stringify(seatDetails) } }}>
-          <div className={styles.paymentButtonContainer}>
-            <Button variant="contained" href="#contained-buttons" className={styles.paymentButton} >
-              Pay Rs.{selectedSeats.length*(movie.ticketCost || 0)}
-            </Button>
-          </div>
-        </Link>
-      )
-    } else {
-      return <></>
-    }
-  }
     
   if (isError) return <div>failed to load</div>
   if (!movie) return <div>loading...</div>
@@ -165,12 +145,8 @@ const CustomizeRows = () => {
       <div className={styles.seatsContainer}>
         <h1>{movie.name}</h1>
         {RenderInputFields()}
-        <Button onClick={handleSaveSetup} variant="contained" className={styles.saveSetUpButton}>
-          Save Setup
-        </Button>
         <p>Select Seats to be <b>Blocked</b></p>
         {seatDetails && <RenderSeats />}
-        <RenderPaymentButton />
       </div>
     </>
   );

@@ -38,6 +38,7 @@ const Seats = () => {
    * 0 - Not booked
    * 1 - Booked
    * 2 - Selected
+   * 3 - Blocked
    */
   const getClassNameForSeats = (seatValue: number) => {
     let dynamicClass;
@@ -45,8 +46,10 @@ const Seats = () => {
       dynamicClass = styles.seatNotBooked;
     }else if (seatValue === 1) {  // booked
       dynamicClass = styles.seatBooked;
-    } else {  // Seat Selected
+    } else if (seatValue === 2) {  // Seat Selected
       dynamicClass = styles.seatSelected;
+    } else { // Seat Blocked
+      dynamicClass = styles.seatBlocked;
     }
     return `${styles.seats} ${dynamicClass}`
   }

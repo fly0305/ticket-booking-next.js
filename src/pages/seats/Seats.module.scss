@@ -8,6 +8,10 @@
   margin-left: -30px;
 }
 .seats {
+  -webkit-user-select: none; /* Chrome/Safari */ 
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none;
   cursor: pointer;
   color: #545454;
   font-size: 12px;
@@ -23,6 +27,12 @@
 }
 .seatSelected0 {
   color: red !important;
+}
+.seatBlocked {
+  cursor: default;
+  // background: #fff;
+  color: #f2f2f2 !important;
+  box-shadow: none;
 }
 .seatBooked {
   background: rgba(138, 138, 138, 0.418);
