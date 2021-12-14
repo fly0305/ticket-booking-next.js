@@ -1,13 +1,15 @@
+import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Movie, Seats } from '../../constants/models/Movies'
 import { Button } from '@mui/material';
 
+import { Movie, Seats } from '../../constants/models/Movies'
 import { useGetMovieById, useBookTicketByMovieId } from '../../services/movies'
 import styles from './Payment.module.scss'
 
 const Tickets = () => {
   const router = useRouter();
+  const [seconds, setSeconds] = useState(500);
   let movieSeatDetails: Seats = {};
   let bookingChargePerTicket = 20, ticketCost: number, bookingFee: number, totalCost: number;
   const {movieId, seatDetails}: any = router.query;
@@ -15,6 +17,14 @@ const Tickets = () => {
   if (seatDetails) {
     movieSeatDetails = JSON.parse(seatDetails);
   }
+
+  useEffect(() => {
+    if (seconds > 0) {
+      setTimeout(() => setSeconds(seconds - 1), 1000);
+    } else {
+      router.push('/');
+    }
+  });
 
   const computeSelectedSeats = () => {
     let selectedSeats: string[] = [];
@@ -79,7 +89,7 @@ const Tickets = () => {
     return newMovieSeatDetails;
   }
 
-  const onPaymentButtonClick = async () => {
+  const onConfirmButtonClick = async () => {
     const res = await useBookTicketByMovieId(movieId, modifiedSeatValue());
     if (res.status === 200) {
       router.push('/');
@@ -88,11 +98,11 @@ const Tickets = () => {
     }
   }
 
-  const RenderPaymentButton = () => {
+  const RenderConfirmButton = () => {
     return (
       <div className={styles.paymentButtonContainer}>
-        <Button variant="contained" href="#contained-buttons" className={styles.paymentButton} onClick={onPaymentButtonClick}>
-          Proceed to Payment
+        <Button variant="contained" href="#contained-buttons" className={styles.paymentButton} onClick={onConfirmButtonClick}>
+          Confirm Booking ({seconds})
         </Button>
       </div>
     )
@@ -112,7 +122,7 @@ const Tickets = () => {
       <RenderBookingCharge selectedSeats={selectedSeats}/>
       <hr className={styles.hrStyle}/>
       <RenderTotalCharge selectedSeats={selectedSeats}/>
-      <RenderPaymentButton />
+      <RenderConfirmButton />
     </div>
     )
   }

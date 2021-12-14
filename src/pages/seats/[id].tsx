@@ -8,7 +8,7 @@ import { Movie, Seats } from '../../constants/models/Movies'
 import { useGetMovieById } from '../../services/movies'
 import styles from './Seats.module.scss'
 
-const Seats = () => {  
+const Seats = ({history}: any) => { 
   const router = useRouter()
   let selectedSeats: string[] = [];
   const { id }: any = router.query
@@ -23,7 +23,7 @@ const Seats = () => {
 
   const onSeatClick = (seatValue: number, rowIndex: number, key: string) => {
     if (seatDetails) {
-      if (seatValue === 1) {
+      if (seatValue === 1 || seatValue === 3) {
         return;
       } else if (seatValue === 0) {
         seatDetails[key][rowIndex] = 2; 
