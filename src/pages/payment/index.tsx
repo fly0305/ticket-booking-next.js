@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from 'react';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Button } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Link from 'next/link';
 
 import { Movie, Seats } from '../../constants/models/Movies'
 import styles from './Payment.module.scss'
@@ -10,7 +12,8 @@ import MoviesContext from '../../context/MoviesContext';
 const Tickets = () => {
   const { movies, setMovies } = useContext(MoviesContext);
   const router = useRouter();
-  const [seconds, setSeconds] = useState(500);
+  const [seconds, setSeconds] = useState(5);
+  const [isTimerCompleted, setIsTimerCompleted] = useState(false);
   let movieSeatDetails: Seats = {};
   let bookingChargePerTicket = 20, ticketCost: number, bookingFee: number, totalCost: number;
   const {movieId, seatDetails}: any = router.query;
@@ -23,7 +26,7 @@ const Tickets = () => {
     if (seconds > 0) {
       setTimeout(() => setSeconds(seconds - 1), 1000);
     } else {
-      router.push('/');
+      setIsTimerCompleted(true);
     }
   });
 
@@ -98,20 +101,13 @@ const Tickets = () => {
       setMovies(movies);
       router.push('/');
     }
-    
-    // const res = await useBookTicketByMovieId(movieId, modifiedSeatValue());
-    // if (res.status === 200) {
-    //   router.push('/');
-    // } else {
-    //   console.log(res);
-    // }
   }
 
   const RenderConfirmButton = () => {
     return (
       <div className={styles.paymentButtonContainer}>
-        <Button variant="contained" href="#contained-buttons" className={styles.paymentButton} onClick={onConfirmButtonClick}>
-          Confirm Booking ({seconds})
+        <Button variant="contained" disabled={isTimerCompleted} className={styles.paymentButton} onClick={onConfirmButtonClick}>
+         {isTimerCompleted ? 'Confirm Booking' : `Confirm Booking (${seconds})` }
         </Button>
       </div>
     )
@@ -123,9 +119,13 @@ const Tickets = () => {
     if (!movie) return <div>loading...</div>
     return (
     <div className={styles.card}>
-      <div className={styles.cardTitle}>
-        BOOKING SUMMARY
+      <div className={styles.cardTitleContainer}>
+        <Link href={{ pathname: `/seats/${movie?.id}`, query: { seats: isTimerCompleted ? null : JSON.stringify(seatDetails) }}}><ArrowBackIcon /></Link>
+        <div className={styles.cardTitle}>
+          BOOKING SUMMARY
+        </div>
       </div>
+        <p className={styles.movieName}>{movie.name}</p>
       <RenderSeatDetails selectedSeats={selectedSeats}/>
       <RenderBookingCharge selectedSeats={selectedSeats}/>
       <hr className={styles.hrStyle}/>

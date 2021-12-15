@@ -17,9 +17,23 @@ const CustomizeRows = () => {
   const [row, setRow] = useState<number>(movie?.rows || 0);
   const [column, setColumn] = useState<number>(movie?.cols || 0);
   
+  useEffect(() => { clearSelectedSeats(); }, [])
+
   useEffect(() => { 
     handleSubmit();
   }, [row, column])
+
+  const clearSelectedSeats = () => {
+    let newMovieSeatDetails = {...seatDetails};
+    for(let key in seatDetails) {
+      seatDetails[key].forEach((seatValue, seatIndex) => {
+        if (seatValue === 2) {
+          seatDetails[key][seatIndex] = 0;
+        }
+      })
+    }
+    return newMovieSeatDetails;
+  }
 
   const handleSubmit = () => {
     let newSeatObject: Seats = {};
@@ -129,7 +143,7 @@ const CustomizeRows = () => {
       <div className={styles.seatsContainer}>
         <h1>{movie.name}</h1>
         {RenderInputFields()}
-        <p>Select Seats to be <b>Blocked</b></p>
+        <p className={styles.header}>Select Seats to be <b className={styles.headerBlockedText}>Blocked</b></p>
         {seatDetails && <RenderSeats />}
       </div>
     </>

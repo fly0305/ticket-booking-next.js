@@ -12,10 +12,16 @@
   margin: auto;
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 11%), 0 6px 20px 0 rgb(0 0 0 / 14%);
 }
+.cardTitleContainer {
+  display: flex;
+}
 .cardTitle {
+  flex: 1;
   font-size: 18px;
   font-weight: 700;
-  margin-bottom: 30px;
+}
+.movieName {
+  font-weight: 700;
 }
 .seatDetailsContainer {
   display: flex;
@@ -32,4 +38,8 @@
   background: #f84464 !important;
   margin-top: 30px !important;
   margin-bottom: 15px !important;
+}
+.paymentButton:disabled {
+  background: #ff8a9f !important;
+  color: #fff;
 }

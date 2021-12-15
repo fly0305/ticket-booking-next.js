@@ -8,20 +8,31 @@ import { Movie, Seats } from '../../constants/models/Movies'
 import styles from './Seats.module.scss'
 import MoviesContext from '../../context/MoviesContext';
 
-const Seats = ({history}: any) => { 
+const Seats = () => { 
   const { movies } = useContext(MoviesContext);
   const router = useRouter()
   let selectedSeats: string[] = [];
-  const { id }: any = router.query
-  // const { movie, isLoading, isError }: MovieType = useGetMovieById(id);
+  const { id, seats }: any = router.query
   const movie = movies.find(mov => mov.id === parseInt(id));
-  const [seatDetails, setSeatDetails] = useState<Seats>({});
-
+  const [seatDetails, setSeatDetails] = useState<Seats>(movie?.seats || {});
+  
   useEffect(() => { 
-    if (movie?.seats) {
-      setSeatDetails(movie.seats); 
+    if (!seats) {
+      clearSelectedSeats();
     }
-  }, [movie])
+  }, [])
+
+  const clearSelectedSeats = () => {
+    let newMovieSeatDetails = {...seatDetails};
+    for(let key in seatDetails) {
+      seatDetails[key].forEach((seatValue, seatIndex) => {
+        if (seatValue === 2) {
+          seatDetails[key][seatIndex] = 0;
+        }
+      })
+    }
+    setSeatDetails(newMovieSeatDetails);
+  }
 
   const onSeatClick = (seatValue: number, rowIndex: number, key: string) => {
     if (seatDetails) {
