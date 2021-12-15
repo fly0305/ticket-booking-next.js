@@ -1,22 +1,24 @@
 import Head from 'next/head'
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Button } from '@mui/material';
 
 import { Movie, Seats } from '../../constants/models/Movies'
-import { useGetMovieById } from '../../services/movies'
 import styles from './Seats.module.scss'
+import MoviesContext from '../../context/MoviesContext';
 
 const Seats = ({history}: any) => { 
+  const { movies } = useContext(MoviesContext);
   const router = useRouter()
   let selectedSeats: string[] = [];
   const { id }: any = router.query
-  const { movie, isLoading, isError }: MovieType = useGetMovieById(id);
+  // const { movie, isLoading, isError }: MovieType = useGetMovieById(id);
+  const movie = movies.find(mov => mov.id === parseInt(id));
   const [seatDetails, setSeatDetails] = useState<Seats>({});
 
   useEffect(() => { 
-    if (movie && movie.seats) {
+    if (movie?.seats) {
       setSeatDetails(movie.seats); 
     }
   }, [movie])
@@ -84,10 +86,10 @@ const Seats = ({history}: any) => {
     }
     if (selectedSeats.length) {
       return (
-        <Link href={{ pathname: '/payment', query: { movieId: movie.id, seatDetails: JSON.stringify(seatDetails) } }}>
+        <Link href={{ pathname: '/payment', query: { movieId: movie?.id, seatDetails: JSON.stringify(seatDetails) } }}>
           <div className={styles.paymentButtonContainer}>
             <Button variant="contained" href="#contained-buttons" className={styles.paymentButton} >
-              Pay Rs.{selectedSeats.length*(movie.ticketCost || 0)}
+              Pay Rs.{selectedSeats.length*(movie?.ticketCost || 0)}
             </Button>
           </div>
         </Link>
@@ -97,7 +99,6 @@ const Seats = ({history}: any) => {
     }
   }
     
-  if (isError) return <div>failed to load</div>
   if (!movie) return <div>loading...</div>
   return (
     <>

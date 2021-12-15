@@ -4,17 +4,19 @@ import { useRouter } from 'next/router'
 import { Button } from '@mui/material';
 
 import { Movie } from '../../constants/models/Movies'
-import { useGetMovieById } from '../../services/movies'
 import styles from './Details.module.scss'
+import MoviesContext from '../../context/MoviesContext';
+import { useContext } from 'react';
 
 const Details = () => {  
+  const { movies } = useContext(MoviesContext);
   const router = useRouter()
   const { id }: any = router.query
-  const { movie, isLoading, isError }: MovieType = useGetMovieById(id);
+  const movie = movies.find(mov => mov.id === parseInt(id));
 
   const RenderBookTicketsButton = () => {
       return (
-        <Link href={`/seats/${movie.id}`}>
+        <Link href={`/seats/${movie?.id}`}>
           <div className={styles.paymentButtonContainer}>
             <Button variant="contained" href="#contained-buttons" className={styles.paymentButton} >
               Book Ticket
@@ -26,7 +28,7 @@ const Details = () => {
 
   const RenderCustomizeRowsButton = () => {
       return (
-        <Link href={`/customize/${movie.id}`}>
+        <Link href={`/customize/${movie?.id}`}>
           <div className={styles.paymentButtonContainer}>
             <Button variant="contained" href="#contained-buttons" className={styles.paymentButton} >
               Customize Row
@@ -36,7 +38,6 @@ const Details = () => {
       )
   }
     
-  if (isError) return <div>failed to load</div>
   if (!movie) return <div>loading...</div>
   return (
     <>

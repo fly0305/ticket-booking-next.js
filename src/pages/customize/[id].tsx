@@ -1,30 +1,21 @@
 import Head from 'next/head'
-import Link from 'next/link';
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Button, TextField } from '@mui/material';
 
 import { Movie, Seats } from '../../constants/models/Movies'
-import { useGetMovieById, useBookTicketByMovieId } from '../../services/movies'
 import styles from './Customize.module.scss'
-import { Box } from '@mui/system';
+import MoviesContext from '../../context/MoviesContext';
 
 const CustomizeRows = () => {  
+  const { movies, setMovies } = useContext(MoviesContext);
   const router = useRouter()
-  let selectedSeats: string[] = [];
   const { id }: any = router.query
-  const { movie, isLoading, isError }: MovieType = useGetMovieById(id);
-  const [seatDetails, setSeatDetails] = useState<Seats>({});
-  const [row, setRow] = useState<number>(0);
-  const [column, setColumn] = useState<number>(0);
-
-  useEffect(() => { 
-    if (movie?.seats) {
-      setRow(movie?.rows || 0)
-      setColumn(movie?.cols || 0)
-      setSeatDetails(movie.seats); 
-    }
-  }, [movie])
+  const movie = movies.find(mov => mov.id === parseInt(id));
+  
+  const [seatDetails, setSeatDetails] = useState<Seats>(movie?.seats || {});
+  const [row, setRow] = useState<number>(movie?.rows || 0);
+  const [column, setColumn] = useState<number>(movie?.cols || 0);
   
   useEffect(() => { 
     handleSubmit();
@@ -32,38 +23,32 @@ const CustomizeRows = () => {
 
   const handleSubmit = () => {
     let newSeatObject: Seats = {};
-    let key;
+    let key: string;
     for (let i=0; i<column; i++) {
       if (i<26) {
         key = String.fromCharCode(65+i)
       } else {
         let character = String.fromCharCode(64+(i/25));
-        key = `${i%25}${character}`;
+        key = `${character}${String.fromCharCode(64+i%25)}`;
       }
-      newSeatObject[key] = Array(row).fill(0);
+      newSeatObject[key] = Array(row).fill(0).map((_,i)=> {
+        if (seatDetails && seatDetails[key] && seatDetails[key][i]) {
+          return seatDetails[key][i];
+        } else {
+          return 0;
+        }
+      });
     }
+    console.log(seatDetails)
     setSeatDetails(newSeatObject); 
   }
 
-  const modifiedSeatValue = () => {
-    let newMovieSeatDetails = {...seatDetails};
-    for(let key in seatDetails) {
-      seatDetails[key].forEach((seatValue, seatIndex) => {
-        if (seatValue === 3) {
-          newMovieSeatDetails[key][seatIndex] = 1;
-        }
-      })
-    }
-    return newMovieSeatDetails;
-  }
-
   const handleSaveSetup = async () => {
-    const res = await useBookTicketByMovieId(id, seatDetails);
-    if (res.status === 200) {
-      console.log(res);
+    let movieIndex = movies.findIndex(mov => mov.id === parseInt(id));
+    if (movieIndex !== -1 && setMovies) {
+      movies[movieIndex].seats = seatDetails;
+      setMovies(movies);
       router.push(`/details/${id}`);
-    } else {
-      console.log(res);
     }
   }
 
@@ -72,9 +57,9 @@ const CustomizeRows = () => {
       <div className={styles.inputContainer}>
         <form className={styles.inputHolder}>
           <TextField id="row" type='number' label="Row" variant="outlined" size="small" className={styles.inputField}
-            name="row" value={row} onChange={(e) => setRow(parseInt(e.target.value))} />
+            name="row" value={row} onChange={(e) => setRow(parseInt(e.target.value) || 0)} />
           <TextField id="outlined-basic" type='number' label="Column" variant="outlined" size="small" className={styles.inputField}
-            value={column} onChange={(e) => setColumn(parseInt(e.target.value))} />
+            value={column} onChange={(e) => setColumn(parseInt(e.target.value) || 0)} />
           <Button onClick={handleSaveSetup} variant="contained" className={styles.saveSetUpButton}>
             Save Setup
           </Button>
@@ -135,7 +120,6 @@ const CustomizeRows = () => {
     ) 
   }
     
-  if (isError) return <div>failed to load</div>
   if (!movie) return <div>loading...</div>
   return (
     <>

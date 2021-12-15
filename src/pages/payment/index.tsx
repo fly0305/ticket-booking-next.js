@@ -1,19 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Button } from '@mui/material';
 
 import { Movie, Seats } from '../../constants/models/Movies'
-import { useGetMovieById, useBookTicketByMovieId } from '../../services/movies'
 import styles from './Payment.module.scss'
+import MoviesContext from '../../context/MoviesContext';
 
 const Tickets = () => {
+  const { movies, setMovies } = useContext(MoviesContext);
   const router = useRouter();
   const [seconds, setSeconds] = useState(500);
   let movieSeatDetails: Seats = {};
   let bookingChargePerTicket = 20, ticketCost: number, bookingFee: number, totalCost: number;
   const {movieId, seatDetails}: any = router.query;
-  const { movie, isLoading, isError }: MovieType = useGetMovieById(movieId);
+  const movie = movies.find(mov => mov.id === parseInt(movieId));
   if (seatDetails) {
     movieSeatDetails = JSON.parse(seatDetails);
   }
@@ -39,7 +40,7 @@ const Tickets = () => {
   }
 
   const RenderSeatDetails = ({selectedSeats}: {selectedSeats: string[]}) => {
-    ticketCost = selectedSeats.length*(movie.ticketCost||0);
+    ticketCost = selectedSeats.length*(movie?.ticketCost||0);
     return (
       <div className={styles.seatDetailsContainer}>
         <div className={styles.seatDetails}>
@@ -90,12 +91,20 @@ const Tickets = () => {
   }
 
   const onConfirmButtonClick = async () => {
-    const res = await useBookTicketByMovieId(movieId, modifiedSeatValue());
-    if (res.status === 200) {
+    let movieIndex = movies.findIndex(mov => mov.id === parseInt(movieId));
+    if (movieIndex !== -1 && setMovies) {
+      movies[movieIndex].seats = modifiedSeatValue();
+      console.log(movies);
+      setMovies(movies);
       router.push('/');
-    } else {
-      console.log(res);
     }
+    
+    // const res = await useBookTicketByMovieId(movieId, modifiedSeatValue());
+    // if (res.status === 200) {
+    //   router.push('/');
+    // } else {
+    //   console.log(res);
+    // }
   }
 
   const RenderConfirmButton = () => {
@@ -111,7 +120,6 @@ const Tickets = () => {
   const RenderCard = () => {
     let selectedSeats: string[] = computeSelectedSeats();
     
-    if (isError) return <div>failed to load</div>
     if (!movie) return <div>loading...</div>
     return (
     <div className={styles.card}>
