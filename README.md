@@ -1,9 +1,37 @@
 # Movie Ticket Booking
-Web application built using React.js and Next.js uses React context 
-for state management and Material-UI for UI components.
 
-<img width="900" alt="cover-pic" src="https://user-images.githubusercontent.com/26500550/146298323-76633a8f-d577-4884-b86f-4d4be68634bf.png">
+<ul>
+  <li><a href="#project-overview">Project Overview</a></li>
+  <li><a href="#working-demo">Working demo</a></li>
+  <li><a href="#run-server-in-local">Run server in local</a></li>
+  <li><a href="#project-description">Project Description</a></li>
+  <li><a href="#screen-shots">Screen Shots</a></li>
+</ul>
 
+## Project Overview
+Movie ticket bokking web application built using React.js 
+and Next.js uses React context for state management and 
+Material-UI for UI components.
+
+<img width="800" alt="cover-pic" src="https://user-images.githubusercontent.com/26500550/146298323-76633a8f-d577-4884-b86f-4d4be68634bf.png">
+
+## Working demo
+
+<a href="https://ticket-booking-ram-sankar.vercel.app">Movie Ticket Booking Site</a>
+
+## Run server in local
+
+Clone the project, cd into the project directory
+
+```bash
+npm install
+npm run dev
+# or
+yarn install
+yarn dev
+```
+
+## Project Description
 A user can book tickets or customize/block the seats. First the user 
 has to select a movie and it's theater, then he can customize the
 rows and columns and modify the seating arrangement according to 
