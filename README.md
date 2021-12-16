@@ -1,34 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Movie Ticket Booking
+Web application built using React.js and Next.js uses React context 
+for state management and Material-UI for UI components.
 
-## Getting Started
+<img width="900" alt="cover-pic" src="https://user-images.githubusercontent.com/26500550/146298323-76633a8f-d577-4884-b86f-4d4be68634bf.png">
 
-First, run the development server:
+A user can book tickets or customize/block the seats. First the user 
+has to select a movie and it's theater, then he can customize the
+rows and columns and modify the seating arrangement according to 
+his theater. 
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+To book tickets he has to click on the "Book Ticket" button, booked seats
+are marked in grey color and selected seats are marked in green color
+later the user can proceed to confirm his booking. Confirmation window 
+will be enabled only for 5 seconds, once 5 seconds are lapsed the
+user has to select the seats again and continue the process.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Screen Shots
+<img width="900" alt="home" src="https://user-images.githubusercontent.com/26500550/146297644-d0eb87c8-46a6-4ca4-9251-3c9881ea8121.png">
+<img width="900" alt="details" src="https://user-images.githubusercontent.com/26500550/146297237-00327f86-fc34-431a-9fc0-3b08148ba068.png">
+<img width="900" alt="customize" src="https://user-images.githubusercontent.com/26500550/146297406-eb97f213-2380-48fb-a7ae-86b54965199c.png">
+<img width="900" alt="seat-selection" src="https://user-images.githubusercontent.com/26500550/146297447-626b5b6c-d562-460f-b4e5-4410342e15a1.png">
+<img width="900" alt="confirm-booking" src="https://user-images.githubusercontent.com/26500550/146297481-df281112-4280-4ccf-8623-5c579fe30831.png">
+<img width="900" alt="seat-selection2" src="https://user-images.githubusercontent.com/26500550/146297691-46da0ddc-115d-459b-962d-ba2d8853b84a.png">
